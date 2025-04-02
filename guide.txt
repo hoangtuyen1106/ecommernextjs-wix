@@ -18,3 +18,7 @@ const eslintConfig = [
     "plugin:@tanstack/eslint-plugin-query/recommended",
   ),
 ];
+
+<pre>
+  {JSON.stringify(featuredProducts, null, 2)}
+</pre>
