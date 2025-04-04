@@ -5,6 +5,7 @@ import Image from "next/image";
 import { getCart } from "./wix-api/cart";
 import { getWixServerClient } from "@/lib/wix-client.server";
 import ShoppingCartButton from "./ShoppingCartButton";
+import UserButton from "@/components/UserButton";
 
 export default async function Navbar() {
   const cart = await getCart(getWixServerClient());
@@ -15,7 +16,10 @@ export default async function Navbar() {
           <Image src={logo} alt="Wix Shop logo" width={40} height={40} />
           <span className="text-xl font-bold">Flow Shop</span>
         </Link>
-        <ShoppingCartButton initialData={cart} />
+        <div className="flex items-center justify-center gap-5">
+          <UserButton />
+          <ShoppingCartButton initialData={cart} />
+        </div>
       </div>
     </header>
   );
