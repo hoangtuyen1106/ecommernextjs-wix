@@ -1,14 +1,12 @@
 import { products } from "@wix/stores";
 import { VariantProps } from "class-variance-authority";
-import { Button, buttonVariants } from "./ui/button";
+import { Button, ButtonProps, buttonVariants } from "./ui/button";
 import { addToCart } from "@/app/wix-api/cart";
 import { wixBrowserClient } from "@/lib/wix-client.browser";
-
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+import LoadingButton from "./LoadingButton";
+import { useAddItemToCart } from "@/hooks/cart";
+import { cn } from "@/lib/utils";
+import { ShoppingCartIcon } from "lucide-react";
 
 interface AddToCartButtonProps extends ButtonProps {
   product: products.Product;
@@ -23,18 +21,22 @@ export default function AddToCartButton({
   className,
   ...props
 }: AddToCartButtonProps) {
+  const mutation = useAddItemToCart();
   return (
-    <Button
+    <LoadingButton
       onClick={() =>
-        addToCart(wixBrowserClient, {
+        mutation.mutate({
           product,
           selectedOptions,
           quantity,
         })
       }
+      loading={mutation.isPending}
+      className={cn("flex gap-3", className)}
       {...props}
     >
+      <ShoppingCartIcon />
       Add to cart
-    </Button>
+    </LoadingButton>
   );
 }

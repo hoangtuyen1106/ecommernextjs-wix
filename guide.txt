@@ -22,3 +22,8 @@ const eslintConfig = [
 <pre>
   {JSON.stringify(featuredProducts, null, 2)}
 </pre>
+
+
+throw Error("Bazinga!");
+
+{/* @ts-expect-error */}
