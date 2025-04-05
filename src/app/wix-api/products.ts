@@ -1,11 +1,14 @@
 import { getWixClient, WixClient } from "@/lib/wix-client.base";
 import { cache } from "react";
+import { number } from "zod";
 
 type ProductsSort = "last_updated" | "price_asc" | "price_desc";
 
 interface QueryProductsFilter {
   collectionIds?: string[] | string;
   sort?: ProductsSort;
+  skip?: number;
+  limit?: number;
 }
 
 // const featuredProducts = await wixClient.products
@@ -16,7 +19,7 @@ interface QueryProductsFilter {
 
 export function queryProducts(
   wixClient: WixClient,
-  { collectionIds, sort = "last_updated" }: QueryProductsFilter,
+  { collectionIds, sort = "last_updated", skip, limit }: QueryProductsFilter,
 ) {
   let query = wixClient.products.queryProducts();
 
@@ -45,6 +48,9 @@ export function queryProducts(
       query = query.descending("lastUpdated");
       break;
   }
+
+  if (limit) query = query.limit(limit);
+  if (skip) query = query.skip(skip);
 
   return query.find();
 }
