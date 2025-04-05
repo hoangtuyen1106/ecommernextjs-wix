@@ -9,7 +9,8 @@ type PageProps = Promise<{ slug: string }>;
 export async function generateMetadata({ params }: { params: PageProps }) {
   const { slug } = await params;
 
-  const product = await getProductBySlug(getWixServerClient(), slug);
+  const wixClient = await getWixServerClient();
+  const product = await getProductBySlug(wixClient, slug);
 
   if (!product) notFound();
 
@@ -35,7 +36,8 @@ export async function generateMetadata({ params }: { params: PageProps }) {
 
 export default async function Page({ params }: { params: PageProps }) {
   const { slug } = await params;
-  const product = await getProductBySlug(getWixServerClient(), slug);
+  const wixClient = await getWixServerClient();
+  const product = await getProductBySlug(wixClient, slug);
 
   if (!product?._id) notFound();
 

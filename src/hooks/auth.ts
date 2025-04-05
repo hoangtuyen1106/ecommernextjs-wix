@@ -35,7 +35,7 @@ export default function useAuth() {
       const logoutUrl = await getLogoutUrl(wixBrowserClient);
 
       Cookies.remove(WIX_OAUTH_DATA_COOKIE);
-      
+
       window.location.href = logoutUrl;
     } catch (error) {
       console.log(error);
