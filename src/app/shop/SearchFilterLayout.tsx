@@ -17,24 +17,28 @@ export default function SearchFilterLayout({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [optimisticCollectionIds, setOptimisticCollectionIds] = useOptimistic({
+  const [optimisticFilters, setOptimisticFilters] = useOptimistic({
     collection: searchParams.getAll("collection"),
     price_min: searchParams.get("price_min") || undefined,
     price_max: searchParams.get("price_max") || undefined,
   });
   const [isPending, startTransition] = useTransition();
 
-  function updateFilters(collectionIds: string[]) {
+  function updateFilters(updates: Partial<typeof optimisticFilters>) {
+    const newState = { ...optimisticFilters, ...updates };
     const newSearchParams = new URLSearchParams(searchParams);
 
-    newSearchParams.delete("collection");
-
-    collectionIds.forEach((collectionId) => {
-      newSearchParams.append("collection", collectionId);
+    Object.entries(newState).forEach(([key, value]) => {
+      newSearchParams.delete(key);
+      if (Array.isArray(value)) {
+        value.forEach((v) => newSearchParams.append(key, v));
+      } else if (value) {
+        newSearchParams.set(key, value);
+      }
     });
-
+    newSearchParams.delete("page");
     startTransition(() => {
-      setOptimisticCollectionIds(collectionIds);
+      setOptimisticFilters(newState);
       router.push(`?${newSearchParams.toString()}`);
     });
   }
@@ -47,8 +51,10 @@ export default function SearchFilterLayout({
       >
         <CollectionsFilter
           collections={collections}
-          selectedCollectionIds={optimisticCollectionIds}
-          updateCollectionIds={updateFilters}
+          selectedCollectionIds={optimisticFilters.collection}
+          updateCollectionIds={(collectionIds) =>
+            updateFilters({ collection: collectionIds })
+          }
         />
       </aside>
       <div className="max-7xl w-full space-y-5">
