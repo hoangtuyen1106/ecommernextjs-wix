@@ -41,7 +41,7 @@ async function CollectionsLayout({ children, params }: LayoutProps) {
               alt={banner.altText}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black" />
-            <h1 className="absolute bottom-10 left-1/2">{collection.name}</h1>
+            <h1 className="absolute bottom-10 left-1/2 -translate-x-1/2 text-3xl font-bold md:text-4xl">{collection.name}</h1>
           </div>
         )}
         <h1

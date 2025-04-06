@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -54,6 +55,7 @@ export default function ShoppingCartButton({
                 ({totalQuantity} {totalQuantity === 1 ? "item" : "items"})
               </span>
             </SheetTitle>
+            <SheetDescription></SheetDescription>
           </SheetHeader>
           <div className="flex grow flex-col space-y-5 overflow-y-auto px-4 pt-1">
             <ul className="space-y-5">
