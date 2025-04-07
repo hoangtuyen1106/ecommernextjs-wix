@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import AddToCartButton from "@/components/AddToCartButton";
-import BackInstrockNotoficationButton from "@/components/BackInStockNotificationButton";
+import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
 
 interface ProductDetailsProps {
   product: products.Product;
@@ -26,6 +26,7 @@ interface ProductDetailsProps {
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1);
+
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
   >(
@@ -52,6 +53,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     );
     return selectedChoice?.media?.items ?? [];
   });
+
   return (
     <div className="flex flex-col gap-10 md:flex-row lg:gap-20">
       <ProductMedia
@@ -71,8 +73,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </div>
         {product.description && (
           <div
-            className="prose dark:prose-invert"
             dangerouslySetInnerHTML={{ __html: product.description }}
+            className="prose dark:prose-invert"
           />
         )}
         <ProductPrice product={product} selectedVariant={selectedVariant} />
@@ -94,27 +96,32 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             />
             {!!availableQuantity &&
               (availableQuantityExceeded || availableQuantity < 10) && (
-                <span>Only {availableQuantity} left in stock</span>
+                <span className="text-destructive">
+                  Only {availableQuantity} left in stock
+                </span>
               )}
           </div>
         </div>
         {inStock ? (
-          <AddToCartButton
-            product={product}
-            selectedOptions={selectedOptions}
-            quantity={quantity}
-            disabled={availableQuantityExceeded || quantity < 1}
-            className="w-full"
-          />
+          <div className="flex items-center gap-2.5">
+            <AddToCartButton
+              product={product}
+              selectedOptions={selectedOptions}
+              quantity={quantity}
+              disabled={availableQuantityExceeded || quantity < 1}
+              className="w-full"
+            />
+           
+          </div>
         ) : (
-          <BackInstrockNotoficationButton
+          <BackInStockNotificationButton
             product={product}
             selectedOptions={selectedOptions}
             className="w-full"
           />
         )}
         {!!product.additionalInfoSections?.length && (
-          <div className="text-muted-foreground space-y-1.5 text-sm">
+          <div className="space-y-1.5 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <InfoIcon className="size-5" />
               <span>Additional product information</span>
@@ -128,7 +135,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                       dangerouslySetInnerHTML={{
                         __html: section.description || "",
                       }}
-                      className="prose text-muted-foreground dark:prose-invert text-sm"
+                      className="prose text-sm text-muted-foreground dark:prose-invert"
                     />
                   </AccordionContent>
                 </AccordionItem>

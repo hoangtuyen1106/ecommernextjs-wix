@@ -1,4 +1,3 @@
-import { delay } from "@/lib/utils";
 import { Metadata } from "next";
 import { ProductsSort, queryProducts } from "../wix-api/products";
 import { getWixServerClient } from "@/lib/wix-client.server";
@@ -73,8 +72,6 @@ async function ProductResults({
   priceMax,
   sort,
 }: ProductResultsProps) {
-  await delay(2000);
-
   const pageSize = 8;
   const wixServerClient = await getWixServerClient();
   const products = await queryProducts(wixServerClient, {

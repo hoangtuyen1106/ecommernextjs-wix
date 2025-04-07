@@ -1,7 +1,7 @@
 import { getCollectionBySlug } from "@/app/wix-api/collections";
 import { Skeleton } from "@/components/ui/skeleton";
 import WixImage from "@/components/WixImage";
-import { cn, delay } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { getWixServerClient } from "@/lib/wix-client.server";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
@@ -20,7 +20,6 @@ export default function Layout({ children, params }: LayoutProps) {
 }
 
 async function CollectionsLayout({ children, params }: LayoutProps) {
-  await delay(2000);
   const { slug } = await params;
   const wixClient = await getWixServerClient();
   const collection = await getCollectionBySlug(wixClient, slug);
