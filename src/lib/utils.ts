@@ -51,6 +51,6 @@ export function checkInStock(
           products.InventoryStatus.PARTIALLY_OUT_OF_STOCK;
 }
 
-export function stripTags(input) {
+export function stripTags(input: string) {
   return input.replace(/<\/?[^>]+(>|$)/g, "");
 }

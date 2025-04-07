@@ -4,11 +4,9 @@ import { cache } from "react";
 
 export const getLoggedInMember = cache(
   async (wixClient: WixClient): Promise<members.Member | null> => {
-    
     if (!wixClient.auth.loggedIn()) {
       return null;
     }
-    
 
     const memberData = await wixClient.members.getCurrentMember({
       fieldsets: [members.Set.FULL],

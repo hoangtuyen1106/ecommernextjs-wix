@@ -7,7 +7,7 @@ import { wixBrowserClient } from "@/lib/wix-client.browser";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
-import { WIX_OAUTH_DATA_COOKIE } from "@/lib/constants";
+import { WIX_OAUTH_DATA_COOKIE, WIX_SESSION_COOKIE } from "@/lib/constants";
 
 export default function useAuth() {
   const pathname = usePathname();
@@ -25,7 +25,7 @@ export default function useAuth() {
 
       window.location.href = redirectUrl;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to log in. Please try again.");
     }
   }
@@ -34,11 +34,11 @@ export default function useAuth() {
     try {
       const logoutUrl = await getLogoutUrl(wixBrowserClient);
 
-      Cookies.remove(WIX_OAUTH_DATA_COOKIE);
+      Cookies.remove(WIX_SESSION_COOKIE);
 
       window.location.href = logoutUrl;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to log out. Please try again.");
     }
   }

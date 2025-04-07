@@ -40,7 +40,7 @@ export function useAddItemToCart() {
       queryClient.setQueryData(queryKey, data.cart);
     },
     onError(error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to add item to cart. Please try again.");
     },
   });
@@ -49,7 +49,7 @@ export function useAddItemToCart() {
 export function useUpdateCartItemQuantity() {
   const queryClient = useQueryClient();
 
-  const mutationKey: MutationKey = ["useUpdateCartItemQuantity"];
+  const mutationKey: MutationKey = ["updateCartItemQuantity"];
 
   return useMutation({
     mutationKey,
@@ -74,7 +74,7 @@ export function useUpdateCartItemQuantity() {
     },
     onError(error, variables, context) {
       queryClient.setQueryData(queryKey, context?.previousState);
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong. Please try again.");
     },
     onSettled() {
@@ -113,6 +113,6 @@ export function useRemoveCartItem() {
     },
     onSettled() {
       queryClient.invalidateQueries({ queryKey });
-    }
+    },
   });
 }
