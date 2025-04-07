@@ -1,7 +1,11 @@
 import { products } from "@wix/stores";
 import { clsx, type ClassValue } from "clsx";
-import { resolve } from "path";
 import { twMerge } from "tailwind-merge";
+
+export function twConfig(propertyValue: string) {
+  const styles = getComputedStyle(document.documentElement);
+  return styles.getPropertyValue(propertyValue) || null;
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

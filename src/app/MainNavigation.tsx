@@ -1,3 +1,5 @@
+"use client";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { collections } from "@wix/stores";
 import Link from "next/link";
 
-interface MainNavigationtionProps {
+interface MainNavigationProps {
   collections: collections.Collection[];
   className?: string;
 }
@@ -19,7 +21,7 @@ interface MainNavigationtionProps {
 export default function MainNavigation({
   collections,
   className,
-}: MainNavigationtionProps) {
+}: MainNavigationProps) {
   return (
     <NavigationMenu className={className}>
       <NavigationMenuList>

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Suspense } from "react";
-import { getWixClient } from "@/lib/wix-client.base";
 import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCollectionBySlug } from "./wix-api/collections";
@@ -55,7 +54,7 @@ async function FeaturedProducts() {
   }
 
   const featuredProducts = await queryProducts(wixClient, {
-    collectionIds: collection._id
+    collectionIds: collection._id,
   });
 
   if (!featuredProducts.items.length) {
