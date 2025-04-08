@@ -3,6 +3,7 @@ import { getLoggedInMember } from "../wix-api/member";
 import { getWixServerClient } from "@/lib/wix-client.server";
 import { notFound } from "next/navigation";
 import MemberInfoForm from "./MemberInforForm";
+import Orders from "./Orders";
 
 export const metadata: Metadata ={
     title: "Profile",
@@ -21,6 +22,7 @@ export default async function Page() {
                 Your profile
             </h1>
             <MemberInfoForm member={member} />
+            <Orders />
         </main>
     )
 }

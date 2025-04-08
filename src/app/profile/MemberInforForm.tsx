@@ -1,6 +1,8 @@
 "use client";
 
+import LoadingButton from "@/components/LoadingButton";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -12,11 +14,11 @@ import { useUpdateMember } from "@/hooks/members";
 import { requiredString } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { members } from "@wix/members";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  loginEmail: requiredString,
+  loginEmail: requiredString.email(),
   firstName: z.string(),
   lastName: z.string(),
 });
@@ -93,6 +95,9 @@ export default function MemberInfoForm({ member }: MemberInfoFormProps) {
             </FormItem>
           )}
         />
+        <LoadingButton type="submit" loading={mutation.isPending}>
+          Submit
+        </LoadingButton>
       </form>
     </Form>
   );

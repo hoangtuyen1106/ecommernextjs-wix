@@ -11,7 +11,7 @@ export function useUpdateMember() {
     mutationFn: (variables: UpdateMemberInfoValues) =>
       updateMemberInfo(wixBrowserClient, variables),
     onSuccess() {
-      toast("Profile updated");
+      toast.success("Profile updated");
       setTimeout(() => {
         router.refresh();
       }, 2000);
