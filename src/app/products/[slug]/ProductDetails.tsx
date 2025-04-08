@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/accordion";
 import AddToCartButton from "@/components/AddToCartButton";
 import BackInStockNotificationButton from "@/components/BackInStockNotificationButton";
+import BuyNowButton from "@/components/BuyNowButton";
 
 interface ProductDetailsProps {
   product: products.Product;
@@ -109,9 +110,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               selectedOptions={selectedOptions}
               quantity={quantity}
               disabled={availableQuantityExceeded || quantity < 1}
-              className="w-full"
+              className="flex-1"
             />
-           
+            <BuyNowButton
+              product={product}
+              selectedOptions={selectedOptions}
+              quantity={quantity}
+              disabled={availableQuantityExceeded || quantity < 1}
+            />
           </div>
         ) : (
           <BackInStockNotificationButton
@@ -121,7 +127,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           />
         )}
         {!!product.additionalInfoSections?.length && (
-          <div className="space-y-1.5 text-sm text-muted-foreground">
+          <div className="text-muted-foreground space-y-1.5 text-sm">
             <span className="flex items-center gap-2">
               <InfoIcon className="size-5" />
               <span>Additional product information</span>
@@ -135,7 +141,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                       dangerouslySetInnerHTML={{
                         __html: section.description || "",
                       }}
-                      className="prose text-sm text-muted-foreground dark:prose-invert"
+                      className="prose text-muted-foreground dark:prose-invert text-sm"
                     />
                   </AccordionContent>
                 </AccordionItem>

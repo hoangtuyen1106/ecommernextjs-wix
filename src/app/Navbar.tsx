@@ -1,4 +1,3 @@
-import { getWixClient } from "@/lib/wix-client.base";
 import logo from "@/assets/logo.png";
 import Link from "next/link";
 import Image from "next/image";

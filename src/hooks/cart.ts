@@ -1,13 +1,13 @@
 import {
   addToCart,
   AddToCartValues,
+  clearCart,
   getCart,
   removeCartItem,
   updateCartItemQuantity,
   UpdateCartItemQuantityValues,
 } from "@/app/wix-api/cart";
 import { wixBrowserClient } from "@/lib/wix-client.browser";
-import { Value } from "@radix-ui/react-select";
 import {
   MutationKey,
   QueryKey,
@@ -74,7 +74,7 @@ export function useUpdateCartItemQuantity() {
     },
     onError(error, variables, context) {
       queryClient.setQueryData(queryKey, context?.previousState);
-      console.error(error);
+      console.log(error);
       toast.error("Something went wrong. Please try again.");
     },
     onSettled() {
@@ -114,5 +114,18 @@ export function useRemoveCartItem() {
     onSettled() {
       queryClient.invalidateQueries({ queryKey });
     },
+  });
+}
+
+export function useClearCart() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => clearCart(wixBrowserClient),
+    onSuccess() {
+      queryClient.setQueryData(queryKey, null);
+      queryClient.invalidateQueries({queryKey})
+    },
+    retry: 3
   });
 }

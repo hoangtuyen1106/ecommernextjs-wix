@@ -25,7 +25,7 @@ export default function useAuth() {
 
       window.location.href = redirectUrl;
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Failed to log in. Please try again.");
     }
   }
@@ -38,7 +38,7 @@ export default function useAuth() {
 
       window.location.href = logoutUrl;
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Failed to log out. Please try again.");
     }
   }

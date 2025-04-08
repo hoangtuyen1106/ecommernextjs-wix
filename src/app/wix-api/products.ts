@@ -1,6 +1,5 @@
-import { getWixClient, WixClient } from "@/lib/wix-client.base";
+import { WixClient } from "@/lib/wix-client.base";
 import { cache } from "react";
-import { number } from "zod";
 
 export type ProductsSort = "last_updated" | "price_asc" | "price_desc";
 
