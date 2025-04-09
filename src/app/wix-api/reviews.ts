@@ -6,11 +6,12 @@ export interface CreateProductReviewValues {
   title: string;
   body: string;
   rating: number;
+  media: { url: string; type: "image" | "video" }[];
 }
 
 export async function createProductReview(
   wixClient: WixClient,
-  { productId, title, body, rating }: CreateProductReviewValues,
+  { productId, title, body, rating, media }: CreateProductReviewValues,
 ) {
   const member = await getLoggedInMember(wixClient);
 
@@ -37,6 +38,36 @@ export async function createProductReview(
       title,
       body,
       rating,
+      media: media.map(({ url, type }) =>
+        type === "image" ? { image: url } : { video: url },
+      ),
     },
   });
+}
+
+interface GetProductReviewsFilters {
+  productId: string;
+  contactId?: string;
+  limit?: number;
+  cursor?: string | null;
+}
+
+export async function getProductReviews(
+  wixClient: WixClient,
+  { productId, contactId, limit, cursor }: GetProductReviewsFilters,
+) {
+  let query = wixClient.reviews.queryReviews().eq("entityId", productId);
+  if (contactId) {
+    query = query.eq("author.contactId", contactId);
+  }
+
+  if (limit) {
+    query = query.limit(limit);
+  }
+
+  if (cursor) {
+    query = query.skipTo(cursor);
+  }
+
+  return query.find();
 }
