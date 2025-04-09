@@ -5,8 +5,8 @@ import { products } from "@wix/stores";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import CreateProductReviewDialog from "./CreateProductReivewDialog";
-import { Dialog } from "@radix-ui/react-dialog";
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -28,7 +28,10 @@ export default function CreateProductReviewButton({
 
   return (
     <>
-      <Button onClick={() => setShowReviewDialog(true)}>
+      <Button
+        disabled={!loggedInMember}
+        onClick={() => setShowReviewDialog(true)}
+      >
         {loggedInMember ? "Write a review" : "Log in to write a review"}
       </Button>
       <CreateProductReviewDialog

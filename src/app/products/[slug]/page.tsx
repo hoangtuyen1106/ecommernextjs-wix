@@ -6,6 +6,10 @@ import { getWixServerClient } from "@/lib/wix-client.server";
 import { Suspense } from "react";
 import Product from "@/components/Product";
 import { Skeleton } from "@/components/ui/skeleton";
+import { products } from "@wix/stores";
+import { getLoggedInMember } from "@/app/wix-api/member";
+import CreateProductReviewButton from "@/components/reviews/CreateProductReviewButton";
+import ProductReviews, { ProductReviewsLoadingSkeleton } from "./ProductReviews";
 
 type PageProps = Promise<{ slug: string }>;
 
@@ -51,6 +55,13 @@ export default async function Page({ params }: { params: PageProps }) {
       <Suspense fallback={<RelatedProductsLoadingSkeleton />}>
         <RelatedProduct productId={product._id} />
       </Suspense>
+      <hr />
+      <div className="space-y-5">
+        <h2 className="text-2xl font-bold">Buyer reviews</h2>
+        <Suspense fallback={<ProductReviewsLoadingSkeleton />}>
+          <ProductReviewSection product={product} />
+        </Suspense>
+      </div>
     </main>
   );
 }
@@ -85,6 +96,27 @@ function RelatedProductsLoadingSkeleton() {
           <Skeleton key={i} className="h-[26rem] w-full" />
         ))}
       </div>
+    </div>
+  );
+}
+
+interface ProductReviewSectionProps {
+  product: products.Product;
+}
+async function ProductReviewSection({ product }: ProductReviewSectionProps) {
+  const wixClient = await getWixServerClient();
+
+  const loggedInMember = await getLoggedInMember(wixClient);
+
+  await delay(5000);
+
+  return (
+    <div className="space-y-5">
+      <CreateProductReviewButton
+        product={product}
+        loggedInMember={loggedInMember}
+      />
+      <ProductReviews product={product} />
     </div>
   );
 }
