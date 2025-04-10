@@ -93,14 +93,19 @@ export default function ShoppingCartButton({
             <div className="space-y-0.5">
               <p className="text-sm">Subtotal amount:</p>
               <p className="font-bold">
-                {/* @ts-expect-error */}
-                {cartQuery.data?.subtotal?.formattedConvertedAmount}
+                {
+                  // @ts-expect-error: subtotal may not exist during loading state
+                  cartQuery.data?.subtotal?.formattedConvertedAmount
+                }
               </p>
               <p className="text-muted-foreground text-xs">
                 Shipping and taxes calculated at checkout
               </p>
             </div>
-            <CheckoutButton size="lg" disabled={!totalQuantity || cartQuery.isFetching} />
+            <CheckoutButton
+              size="lg"
+              disabled={!totalQuantity || cartQuery.isFetching}
+            />
           </div>
         </SheetContent>
       </Sheet>

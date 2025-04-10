@@ -15,7 +15,6 @@ interface PageProps {
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
 
@@ -35,10 +34,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-  searchParams,
-}: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const { page = "1" } = await searchParams;
 

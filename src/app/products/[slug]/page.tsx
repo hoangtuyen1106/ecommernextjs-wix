@@ -1,7 +1,7 @@
 import { getProductBySlug, getRelatedProducts } from "@/app/wix-api/products";
 import { notFound } from "next/navigation";
 import ProductDetails from "./ProductDetails";
-import { delay, stripTags } from "@/lib/utils";
+import { stripTags } from "@/lib/utils";
 import { getWixServerClient } from "@/lib/wix-client.server";
 import { Suspense } from "react";
 import Product from "@/components/Product";

@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 import { WixClient } from "@/lib/wix-client.base";
 
 export async function getOrder(wixClient: WixClient, orderId: string) {

@@ -1,7 +1,7 @@
 import { getProductById } from "@/app/wix-api/products";
 import { getWixServerClient } from "@/lib/wix-client.server";
 import { notFound, redirect } from "next/navigation";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 interface PageProps {
   params: { id: string };
   searchParams: any;
