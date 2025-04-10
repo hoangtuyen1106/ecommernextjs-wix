@@ -18,9 +18,6 @@ export const metadata: Metadata = {
     absolute: "Wix Shop",
   },
   description: "Build E-commerce Demo by Tuyen",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
