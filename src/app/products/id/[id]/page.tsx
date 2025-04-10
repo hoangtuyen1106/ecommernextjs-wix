@@ -7,6 +7,7 @@ interface PageProps {
   searchParams: any;
 }
 
+// @ts-expect-error: local PageProps does not match generated types
 export default async function Page({ params, searchParams }: PageProps) {
   if (params.id === "someId") {
     redirect(`/products/leather-shoes-3?${new URLSearchParams(searchParams)}`);
