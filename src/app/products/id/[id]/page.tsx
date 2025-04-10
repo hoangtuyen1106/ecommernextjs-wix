@@ -4,13 +4,14 @@ import { notFound, redirect } from "next/navigation";
 
 interface PageProps {
   params: { id: string };
-  searchParams: any;
+  // Sửa kiểu của searchParams
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-// @ts-expect-error: local PageProps does not match generated types
 export default async function Page({ params, searchParams }: PageProps) {
   if (params.id === "someId") {
-    redirect(`/products/leather-shoes-3?${new URLSearchParams(searchParams)}`);
+
+    redirect(`/products/leather-shoes-3?${new URLSearchParams(searchParams as any)}`);
   }
 
   const wixClient = await getWixServerClient();
@@ -18,5 +19,5 @@ export default async function Page({ params, searchParams }: PageProps) {
 
   if (!product) notFound();
 
-  redirect(`/products/${product.slug}?${new URLSearchParams(searchParams)}`);
+  redirect(`/products/${product.slug}?${new URLSearchParams(searchParams as any)}`);
 }
