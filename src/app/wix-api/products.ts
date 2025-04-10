@@ -1,6 +1,5 @@
 import { WIX_STORES_APP_ID } from "@/lib/constants";
 import { WixClient } from "@/lib/wix-client.base";
-import { constants } from "buffer";
 import { cache } from "react";
 
 export type ProductsSort = "last_updated" | "price_asc" | "price_desc";

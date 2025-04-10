@@ -26,7 +26,7 @@ export async function createProductReview(
         member.contact?.lastName ||
         member.profile?.nickname ||
         "Anonymous";
-        console.log
+
   try {
     return await wixClient.reviews.createReview({
       author: {

@@ -73,6 +73,9 @@ export default function Order({ order }: OrderProps) {
                 {paymentStatus || "No information"}
               </Badge>
             </div>
+            <div className="font-semibold">
+              {fulfillmentStatus || "No information"}
+            </div>
           </div>
           <div className="divide-y">
             {order.lineItems?.map((item) => (

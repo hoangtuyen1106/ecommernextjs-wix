@@ -18,7 +18,6 @@ export async function generateMetadata({
   searchParams,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { page } = await searchParams;
 
   const wixClient = await getWixServerClient();
   const collection = await getCollectionBySlug(wixClient, slug);
