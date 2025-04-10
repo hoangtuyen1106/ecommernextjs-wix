@@ -9,7 +9,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { products } from "@wix/stores";
 import { getLoggedInMember } from "@/app/wix-api/member";
 import CreateProductReviewButton from "@/components/reviews/CreateProductReviewButton";
-import ProductReviews, { ProductReviewsLoadingSkeleton } from "./ProductReviews";
+import ProductReviews, {
+  ProductReviewsLoadingSkeleton,
+} from "./ProductReviews";
+import { getProductReviews } from "@/app/wix-api/reviews";
 
 type PageProps = Promise<{ slug: string }>;
 
@@ -71,7 +74,6 @@ interface RelatedProductProps {
 }
 
 async function RelatedProduct({ productId }: RelatedProductProps) {
-  await delay(2000);
   const wixClient = await getWixServerClient();
   const relatedProducts = await getRelatedProducts(wixClient, productId);
   if (!relatedProducts.length) return null;
@@ -104,17 +106,26 @@ interface ProductReviewSectionProps {
   product: products.Product;
 }
 async function ProductReviewSection({ product }: ProductReviewSectionProps) {
+  if (!product._id) return null;
   const wixClient = await getWixServerClient();
 
   const loggedInMember = await getLoggedInMember(wixClient);
 
-  await delay(5000);
+  const existingReview = loggedInMember?.contactId
+    ? (
+        await getProductReviews(wixClient, {
+          productId: product._id,
+          contactId: loggedInMember.contactId,
+        })
+      ).items[0]
+    : null;
 
   return (
     <div className="space-y-5">
       <CreateProductReviewButton
         product={product}
         loggedInMember={loggedInMember}
+        hasExistingReview={!!existingReview}
       />
       <ProductReviews product={product} />
     </div>

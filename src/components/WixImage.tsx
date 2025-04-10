@@ -63,8 +63,9 @@ export default function WixImage({
   alt,
   ...props
 }: WixImageProps) {
+  const { scaleToFill, ...restProps } = props;
   const imageUrl = mediaIdentifier
-    ? props.scaleToFill || props.scaleToFill === undefined
+  ? scaleToFill || scaleToFill === undefined
       ? wixMedia.getScaledToFillImageUrl(
           mediaIdentifier,
           props.width,
@@ -73,5 +74,5 @@ export default function WixImage({
         )
       : wixMedia.getImageUrl(mediaIdentifier).url
     : placeholder;
-  return <img src={imageUrl} alt={alt || ""} {...props} />;
+  return <img src={imageUrl} alt={alt || ""} {...restProps} />;
 }

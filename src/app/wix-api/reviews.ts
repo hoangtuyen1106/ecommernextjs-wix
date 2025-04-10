@@ -26,23 +26,27 @@ export async function createProductReview(
         member.contact?.lastName ||
         member.profile?.nickname ||
         "Anonymous";
-
-  return wixClient.reviews.createReview({
-    author: {
-      authorName,
-      contactId: member.contactId,
-    },
-    entityId: productId,
-    namespace: "stores",
-    content: {
-      title,
-      body,
-      rating,
-      media: media.map(({ url, type }) =>
-        type === "image" ? { image: url } : { video: url },
-      ),
-    },
-  });
+        console.log
+  try {
+    return await wixClient.reviews.createReview({
+      author: {
+        authorName,
+        contactId: member.contactId,
+      },
+      entityId: productId,
+      namespace: "stores",
+      content: {
+        title,
+        body,
+        rating,
+        media: media.map(({ url, type }) =>
+          type === "image" ? { image: url } : { video: url },
+        ),
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 interface GetProductReviewsFilters {
